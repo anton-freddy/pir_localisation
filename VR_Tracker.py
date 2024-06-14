@@ -3,11 +3,25 @@ import time
 
 class HTC_Tracker:
     def __init__(self, offset = [0, 0, 0], log_fnc=None):
-        # Initialize the VR system
-        openvr.init(openvr.VRApplication_Other)
-        self.vr_system = openvr.VRSystem()
-        self.offset = offset
         self.log = log_fnc or self.default_log
+        
+        # Initialize the VR system
+        try:
+            openvr.init(openvr.VRApplication_Other)
+            self.vr_active = 1
+        except Exception as e:
+            self.log(f'An unexpected error occurred: {type(e).__name__}')
+            self.vr_active = 0
+            
+        try:
+            self.vr_system = openvr.VRSystem()
+            self.vr_active = 1
+        except Exception as e:
+            self.log(f'An unexpected error occurred: {e}')        
+            self.vr_active = 0
+        
+        self.offset = offset
+        
         
     def default_log(self, message):
         print(message)

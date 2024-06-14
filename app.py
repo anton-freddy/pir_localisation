@@ -20,10 +20,10 @@ class MainApp(QMainWindow):
         self.ui = Ui_MainWindow()
         self.caliPop = CaliPopUp()
         self.ui.setupUi(self)
-        self.setWindowIcon(QIcon('main_app_icon.png'))
+        self.setWindowIcon(QIcon('images/main_app_icon.png'))
         self.setWindowTitle('Vive Ground Truth System')
         self.caliPop.setWindowTitle('Calibration')
-        self.caliPop.setWindowIcon(QIcon('main_app_icon.png'))
+        self.caliPop.setWindowIcon(QIcon('images/main_app_icon.png'))
         
         # Initialize the 3D plot
         self.figure = Figure()
@@ -55,11 +55,18 @@ class MainApp(QMainWindow):
         self.ui.dataButton.clicked.connect(self.dataButtonClicked)
         self.ui.quitButton.clicked.connect(self.end_app)
         
+        self.tracker = HTC_Tracker(log_fnc=self.add_log_message)
+        
         # Loops
         self.timer1 = QTimer(self)
-        self.timer1.setInterval(1000)
+        self.timer1.setInterval(50)
         self.timer1.timeout.connect(self.loop1)
         self.timer1.start()
+        
+        self.timer2 = QTimer(self)
+        self.timer2.setInterval(1000)
+        self.timer2.timeout.connect(self.loop2)
+        self.timer2.start()
         
         # self.tracker = HTC_Tracker(log_fnc=self.add_log_message)
         # self.tracker_i = self.tracker.get_device_index(openvr.TrackedDeviceClass_GenericTracker)
@@ -71,7 +78,10 @@ class MainApp(QMainWindow):
         self.updateX(x)
         self.updateY(y)
         self.updateZ(z)
-        self.plot_single_point(x, y, z)
+        self.plot_multiple_points(x, y, z)
+        
+    def loop2(self):
+        self.set_vr_connected(self.tracker.vr_active)
         
         
     def plot_single_point(self, x, y, z):
@@ -119,9 +129,19 @@ class MainApp(QMainWindow):
         
     def TrackingButtonClicked(self):
         self.add_log_message("Track Button Clicked")
+        self.set_vr_connected(0)
         
     def dataButtonClicked(self):
         self.add_log_message("Data Button Clicked")
+        self.set_vr_connected(1)
+        
+    def set_vr_connected(self, bool):
+        if bool == 1:
+            self.ui.VRstatus_label.setStyleSheet(u"color: rgb(50, 255, 0)")
+            self.ui.VRstatus_label.setText("VR Connected")
+        else:
+            self.ui.VRstatus_label.setStyleSheet(u"color: rgb(255, 0, 0)")
+            self.ui.VRstatus_label.setText("VR Not Connected")
         
         
         

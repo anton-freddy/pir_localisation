@@ -1,0 +1,1 @@
+pyinstaller --onefile --noconsole --add-data="images\main_app_icon.png;images" --icon="images\main_app_icon.ico" --add-binary="libopenvr_api_64.dll;openvr" --add-binary="libopenvr_api_64.so;openvr" --add-binary="libopenvr_api_32.dll;openvr" --add-binary="libopenvr_api_32.so;openvr" --add-binary="libopenvr_api_32.dylib;openvr" app.py
