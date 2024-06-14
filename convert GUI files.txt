@@ -1,0 +1,8 @@
+
+Main GUI:
+
+pyside6-uic MainApp.ui -o main_ui_file.py
+
+Calibration GUI:
+
+pyside6-uic CalibrationPopUp.ui -o cali_ui_file.py
