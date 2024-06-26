@@ -1,9 +1,12 @@
 import openvr
+import numpy as np
 import time
 
 class HTC_Tracker:
     def __init__(self, offset = [0, 0, 0], log_fnc=None):
         self.log = log_fnc or self.default_log
+        self.rotation_matrix = None
+        self.translation_vector = None
         
         # Initialize the VR system
         try:
@@ -17,7 +20,7 @@ class HTC_Tracker:
             self.vr_system = openvr.VRSystem()
             self.vr_active = 1
         except Exception as e:
-            self.log(f'An unexpected error occurred: {e}')        
+            self.log(f'An unexpected error occurred: {type(e).__name__}')        
             self.vr_active = 0
         
         self.offset = offset
@@ -29,6 +32,33 @@ class HTC_Tracker:
     def log(self, message):
         self.log(message)
     
+    def calibrate(self, global_points, local_points):
+        global_points_homogeneous = np.hstack([global_points, np.ones((global_points.shape[0], 1))])
+        A, residuals, rank, s = np.linalg.lstsq(global_points_homogeneous, local_points, rcond=None)
+        self.rotation_matrix = A[:3, :3]
+        self.translation_vector = A[:, 3]
+        
+    def transform_pose(self, global_pose):
+        if self.rotation_matrix is None or self.translation_vector is None:
+            self.log("Calibration data not set.")
+            return None
+        global_pose_homogeneous = np.hstack([global_pose, 1])
+        local_pose = self.rotation_matrix.dot(global_pose[:3]) + self.translation_vector
+        return local_pose.tolist()
+
+    def get_local_pose(self):
+        tracker_index = self.get_device_index(openvr.TrackedDeviceClass_GenericTracker)
+        if tracker_index is None:
+            self.log("Tracker not found")
+            return None
+
+        pose_matrix = self.get_raw_pose(tracker_index)
+        if pose_matrix is None:
+            self.log("Invalid pose data")
+            return None
+        
+        return self.transform_pose(np.array([pose_matrix[0][3], pose_matrix[1][3], pose_matrix[2][3]]))
+
 
     def get_device_index(self, device_class):
         # Find the first device that matches the device class

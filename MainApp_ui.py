@@ -20,15 +20,15 @@ from PySide6.QtWidgets import (QApplication, QFormLayout, QFrame, QGridLayout,
     QListView, QMainWindow, QPushButton, QSizePolicy,
     QSpacerItem, QVBoxLayout, QWidget)
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        if not MainWindow.objectName():
-            MainWindow.setObjectName(u"MainWindow")
-        MainWindow.setEnabled(True)
-        MainWindow.resize(960, 540)
-        MainWindow.setMinimumSize(QSize(960, 540))
-        MainWindow.setStyleSheet(u"font: 10pt \"SF Pro Bold\";")
-        self.centralwidget = QWidget(MainWindow)
+class Ui_MainApp(object):
+    def setupUi(self, MainApp):
+        if not MainApp.objectName():
+            MainApp.setObjectName(u"MainApp")
+        MainApp.setEnabled(True)
+        MainApp.resize(960, 540)
+        MainApp.setMinimumSize(QSize(960, 540))
+        MainApp.setStyleSheet(u"font: 10pt \"SF Pro Bold\";")
+        self.centralwidget = QWidget(MainApp)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setEnabled(True)
         self.gridLayout_2 = QGridLayout(self.centralwidget)
@@ -66,10 +66,10 @@ class Ui_MainWindow(object):
 
         self.sideBarVertLayout.addWidget(self.trackingButton)
 
-        self.dataButton = QPushButton(self.sideBarGroup)
-        self.dataButton.setObjectName(u"dataButton")
+        self.settingsButton = QPushButton(self.sideBarGroup)
+        self.settingsButton.setObjectName(u"settingsButton")
 
-        self.sideBarVertLayout.addWidget(self.dataButton)
+        self.sideBarVertLayout.addWidget(self.settingsButton)
 
         self.verticalSpacer = QSpacerItem(20, 618, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -211,24 +211,24 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addLayout(self.formLayout, 0, 1, 1, 1)
 
-        MainWindow.setCentralWidget(self.centralwidget)
+        MainApp.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
+        self.retranslateUi(MainApp)
 
-        QMetaObject.connectSlotsByName(MainWindow)
+        QMetaObject.connectSlotsByName(MainApp)
     # setupUi
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.homeButton.setText(QCoreApplication.translate("MainWindow", u"Home", None))
-        self.calibrationButton.setText(QCoreApplication.translate("MainWindow", u"Calibartion", None))
-        self.trackingButton.setText(QCoreApplication.translate("MainWindow", u"Tracking", None))
-        self.dataButton.setText(QCoreApplication.translate("MainWindow", u"Recorded Data", None))
-        self.quitButton.setText(QCoreApplication.translate("MainWindow", u"Quit", None))
-        self.xLabel.setText(QCoreApplication.translate("MainWindow", u"X: ", None))
-        self.yLabel.setText(QCoreApplication.translate("MainWindow", u"Y:", None))
-        self.zLabel.setText(QCoreApplication.translate("MainWindow", u"Z: ", None))
-        self.VRstatus_label.setText(QCoreApplication.translate("MainWindow", u"VR Disconnected", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Log", None))
+    def retranslateUi(self, MainApp):
+        MainApp.setWindowTitle(QCoreApplication.translate("MainApp", u"MainWindow", None))
+        self.homeButton.setText(QCoreApplication.translate("MainApp", u"Home", None))
+        self.calibrationButton.setText(QCoreApplication.translate("MainApp", u"Calibartion", None))
+        self.trackingButton.setText(QCoreApplication.translate("MainApp", u"Tracking", None))
+        self.settingsButton.setText(QCoreApplication.translate("MainApp", u"Settings", None))
+        self.quitButton.setText(QCoreApplication.translate("MainApp", u"Quit", None))
+        self.xLabel.setText(QCoreApplication.translate("MainApp", u"X: ", None))
+        self.yLabel.setText(QCoreApplication.translate("MainApp", u"Y:", None))
+        self.zLabel.setText(QCoreApplication.translate("MainApp", u"Z: ", None))
+        self.VRstatus_label.setText(QCoreApplication.translate("MainApp", u"VR Disconnected", None))
+        self.label.setText(QCoreApplication.translate("MainApp", u"Log", None))
     # retranslateUi
 

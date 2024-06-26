@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>MainApp</class>
+ <widget class="QMainWindow" name="MainApp">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -88,9 +88,9 @@ QPushButton{
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="dataButton">
+          <widget class="QPushButton" name="settingsButton">
            <property name="text">
-            <string>Recorded Data</string>
+            <string>Settings</string>
            </property>
           </widget>
          </item>
